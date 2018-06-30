@@ -24,19 +24,23 @@ function shuffle(array) {
 
     return array;
 }
-
+const openCardsArray = []
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
-  showCard(event);
+  showCard(event.target);
+  openCard(event.target);
 }
-function showCard (event) {
-  event.target.classList.add('open', 'show');
+function showCard (target) {
+  target.classList.add('open', 'show');
+}
+function openCard (target) {
+  openCardsArray.push(target);
 }
 cardDeck.addEventListener('click', respondtoClick);
 /*
  * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+ *  - display the card's symbol (put this functionality in another function that you call from this one)done!
+ *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)done!
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
