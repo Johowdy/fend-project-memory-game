@@ -28,13 +28,40 @@ const openCardsArray = []
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
   showCard(event.target);
+  cardMatch(event.target);
   openCard(event.target);
 }
+
 function showCard (target) {
   target.classList.add('open', 'show');
 }
+
 function openCard (target) {
   openCardsArray.push(target);
+}
+
+function cardMatch(target) {
+  if (openCardsArray.length > 0) {
+    const icon = target.getElementsByTagName('i')[0];
+    const match = openCardsArray.find(function(element) {
+      if (icon.className === element.getElementsByTagName('i')[0].className) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+    if (match) {
+      lockCards(match, target);
+    } else {
+
+    }
+
+  }
+}
+
+function lockCards(match, target) {
+  target.classList.add('match');
+  match.classList.add('match');
 }
 cardDeck.addEventListener('click', respondtoClick);
 /*
