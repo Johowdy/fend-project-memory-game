@@ -54,10 +54,12 @@ function cardMatchCheck(target) {
       //empties array after match occurs
       openCardsArray.pop();
     } else {
-      const nonMatchingCard = openCardsArray.pop();
-      //hiding card that was just clicked, hiding card in the array
-      hideCard(target);
-      hideCard(nonMatchingCard);
+      //hiding card that was just clicked, hiding card in the array after a
+      //time delay
+      setTimeout(function() {
+        hideCard(target);
+        hideCard(openCardsArray.pop());
+      }, 400);
     }
   } else {
     //adds the first card that's clicked to the array
