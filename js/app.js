@@ -28,19 +28,18 @@ const openCardsArray = []
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
   showCard(event.target);
-  cardMatch(event.target);
-  openCard(event.target);
+  cardMatchCheck(event.target);
 }
 
 function showCard (target) {
   target.classList.add('open', 'show');
 }
 
-function openCard (target) {
+function addtoOpenList (target) {
   openCardsArray.push(target);
 }
 
-function cardMatch(target) {
+function cardMatchCheck(target) {
   if (openCardsArray.length > 0) {
     const icon = target.getElementsByTagName('i')[0];
     const match = openCardsArray.find(function(element) {
@@ -52,11 +51,22 @@ function cardMatch(target) {
     });
     if (match) {
       lockCards(match, target);
+      //empties array after match occurs
+      openCardsArray.pop();
     } else {
-
+      const nonMatchingCard = openCardsArray.pop();
+      //hiding card that was just clicked, hiding card in the array
+      hideCard(target);
+      hideCard(nonMatchingCard);
     }
-
+  } else {
+    //adds the first card that's clicked to the array
+    addtoOpenList(target);
   }
+}
+
+function hideCard(card) {
+  card.classList.remove('open', 'show');
 }
 
 function lockCards(match, target) {
@@ -69,7 +79,7 @@ cardDeck.addEventListener('click', respondtoClick);
  *  - display the card's symbol (put this functionality in another function that you call from this one)done!
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)done!
  *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
+ *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)done!
  *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
