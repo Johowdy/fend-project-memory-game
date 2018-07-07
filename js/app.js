@@ -59,7 +59,7 @@ function cardMatchCheck(target) {
       setTimeout(function() {
         hideCard(target);
         hideCard(openCardsArray.pop());
-      }, 400);
+      }, 250);
     }
   } else {
     //adds the first card that's clicked to the array
@@ -68,12 +68,14 @@ function cardMatchCheck(target) {
 }
 
 function hideCard(card) {
-  card.classList.remove('open', 'show');
+  card.classList.remove('open','show');
 }
 
 function lockCards(match, target) {
   target.classList.add('match');
+  target.classList.remove('open','show');
   match.classList.add('match');
+  match.classList.remove('open','show');
 }
 cardDeck.addEventListener('click', respondtoClick);
 /*
