@@ -104,11 +104,11 @@ function timeKeeper() {
 //decrement after a certain # of moves, then again after a certain # of moves
 function starRating() {
   let lastStar;
-  if (moves === 26) {
+  if (moves === 5) {
     lastStar = document.querySelectorAll('.fa-star')[2];
-  } else if (moves === 36) {
+  } else if (moves === 10) {
     lastStar = document.querySelectorAll('.fa-star')[1];
-  } else if (moves === 40) {
+  } else if (moves === 11) {
     lastStar = document.querySelectorAll('.fa-star')[0];
   }
   if (lastStar !== undefined) {
@@ -122,7 +122,21 @@ function winGame() {
 
 }
 
-//function
+//function to restart the game board, the timer, the star rating
+function restart() {
+//reset move counter
+  moves = 0;
+  document.querySelector('.moves').textContent = moves;
+//reset time
+//shuffle deck`
+//reset stars
+  document.querySelectorAll('.fa-star-o').forEach(function(element) {
+    element.classList.replace('fa-star-o', 'fa-star');
+  });
+//flip cards upside down
+
+}
+document.querySelector('.fa-repeat').addEventListener('click', restart);
 cardDeck.addEventListener('click', respondtoClick);
 /*
  * set up the event listener for a card. If a card is clicked:
