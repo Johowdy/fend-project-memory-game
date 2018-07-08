@@ -27,9 +27,12 @@ function shuffle(array) {
 const openCardsArray = [];
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
-  showCard(event.target);
-  cardMatchCheck(event.target);
-  moveCounter();
+  if(event.target.classList.contains('card')) {
+    showCard(event.target);
+    cardMatchCheck(event.target);
+    moveCounter();
+    starRating();
+  }
 }
 //flips cards over
 function showCard (target) {
@@ -100,7 +103,17 @@ function timeKeeper() {
 //function to display the star rating to reflect player's performance. It should
 //decrement after a certain # of moves, then again after a certain # of moves
 function starRating() {
-
+  let lastStar;
+  if (moves === 26) {
+    lastStar = document.querySelectorAll('.fa-star')[2];
+  } else if (moves === 36) {
+    lastStar = document.querySelectorAll('.fa-star')[1];
+  } else if (moves === 40) {
+    lastStar = document.querySelectorAll('.fa-star')[0];
+  }
+  if (lastStar !== undefined) {
+    lastStar.classList.replace('fa-star', 'fa-star-o');
+  }
 }
 
 //function to congratulate player on winning, ask if they want to play again,
