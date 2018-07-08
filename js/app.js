@@ -24,24 +24,29 @@ function shuffle(array) {
 
     return array;
 }
-const openCardsArray = []
+const openCardsArray = [];
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
   showCard(event.target);
   cardMatchCheck(event.target);
+  moveCounter();
 }
-
+//flips cards over
 function showCard (target) {
   target.classList.add('open', 'show');
 }
-
+//adds a card to the openCardsArray, called in cardMatchCheck function
 function addtoOpenList (target) {
   openCardsArray.push(target);
 }
 
+//function to search for matched card in the openCardsArray, either locks or
+//hides card pending match
 function cardMatchCheck(target) {
   if (openCardsArray.length > 0) {
+    //grabs the 'i' tag underneath the clicked card
     const icon = target.getElementsByTagName('i')[0];
+    //match variable = either has matching card or undefined
     const match = openCardsArray.find(function(element) {
       if (icon.className === element.getElementsByTagName('i')[0].className) {
         return true;
@@ -49,7 +54,7 @@ function cardMatchCheck(target) {
         return false;
       }
     });
-    if (match) {
+    if (match !== undefined) {
       lockCards(match, target);
       //empties array after match occurs
       openCardsArray.pop();
@@ -66,17 +71,45 @@ function cardMatchCheck(target) {
     addtoOpenList(target);
   }
 }
-
+//removes the open & show CSS classes to hide the card, called in cardMatchCheck
 function hideCard(card) {
   card.classList.remove('open','show');
 }
-
+//function to lock both cards if they match, called in cardMatchCheck
 function lockCards(match, target) {
   target.classList.add('match');
   target.classList.remove('open','show');
   match.classList.add('match');
   match.classList.remove('open','show');
 }
+
+//function to increment the move counter and dislay it on the page & put
+//functionality in another function called from this one
+let moves = 0;
+function moveCounter () {
+  moves += 1;
+  document.querySelector('.moves').textContent = moves;
+}
+
+//function to display a timer when a player starts a game and stops once the
+//player wins the game
+function timeKeeper() {
+
+}
+
+//function to display the star rating to reflect player's performance. It should
+//decrement after a certain # of moves, then again after a certain # of moves
+function starRating() {
+
+}
+
+//function to congratulate player on winning, ask if they want to play again,
+//and provide summary of time to win and star starRating
+function winGame() {
+
+}
+
+//function
 cardDeck.addEventListener('click', respondtoClick);
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -84,7 +117,7 @@ cardDeck.addEventListener('click', respondtoClick);
  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)done!
  *  - if the list already has another card, check to see if the two cards match
  *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)done!
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+ *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)done!
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
