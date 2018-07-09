@@ -27,7 +27,10 @@ function shuffle(array) {
 const openCardsArray = [];
 const cardDeck = document.querySelector('.deck');
 function respondtoClick(event) {
-  if(event.target.classList.contains('card')) {
+  if (event.target.classList.contains('card') &&
+      !event.target.classList.contains('match') &&
+      !event.target.classList.contains('open') &&
+      !event.target.classList.contains('show')) {
     showCard(event.target);
     cardMatchCheck(event.target);
     moveCounter();
@@ -128,13 +131,16 @@ function restart() {
   moves = 0;
   document.querySelector('.moves').textContent = moves;
 //reset time
-//shuffle deck`
 //reset stars
   document.querySelectorAll('.fa-star-o').forEach(function(element) {
     element.classList.replace('fa-star-o', 'fa-star');
   });
 //flip cards upside down
-
+  document.querySelectorAll('.card').forEach(function(element) {
+    element.classList.remove('match', 'open', 'show');
+  });
+  //shuffle deck`
+    document.querySelectorAll('.card')
 }
 document.querySelector('.fa-repeat').addEventListener('click', restart);
 cardDeck.addEventListener('click', respondtoClick);
