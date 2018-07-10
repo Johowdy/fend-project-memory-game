@@ -21,7 +21,6 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 const openCardsArray = [];
@@ -127,20 +126,28 @@ function winGame() {
 
 //function to restart the game board, the timer, the star rating
 function restart() {
-//reset move counter
+  //empty openCardsArray
+  openCardsArray.pop();
+  //reset move counter
   moves = 0;
   document.querySelector('.moves').textContent = moves;
-//reset time
-//reset stars
+  //reset time
+  //reset stars
   document.querySelectorAll('.fa-star-o').forEach(function(element) {
     element.classList.replace('fa-star-o', 'fa-star');
   });
-//flip cards upside down
+  //flip cards upside down
   document.querySelectorAll('.card').forEach(function(element) {
     element.classList.remove('match', 'open', 'show');
   });
-  //shuffle deck`
-    document.querySelectorAll('.card')
+  //shuffle deck
+  const shuffled = shuffle(Array.from(document.querySelectorAll('.card')));
+  shuffled.forEach(function(element) {
+    element.remove();
+  });
+  shuffled.forEach(function(element) {
+    cardDeck.appendChild(element)
+  });
 }
 document.querySelector('.fa-repeat').addEventListener('click', restart);
 cardDeck.addEventListener('click', respondtoClick);
