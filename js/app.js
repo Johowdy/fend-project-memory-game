@@ -9,7 +9,8 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
+const openCardsArray = [];
+const cardDeck = document.querySelector('.deck');
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -23,8 +24,7 @@ function shuffle(array) {
     }
     return array;
 }
-const openCardsArray = [];
-const cardDeck = document.querySelector('.deck');
+
 function respondtoClick(event) {
   if (event.target.classList.contains('card') &&
       !event.target.classList.contains('match') &&
@@ -140,7 +140,10 @@ function restart() {
   document.querySelectorAll('.card').forEach(function(element) {
     element.classList.remove('match', 'open', 'show');
   });
-  //shuffle deck
+  deckShuffle();
+}
+//function to shuffle cards in deck
+function deckShuffle() {
   const shuffled = shuffle(Array.from(document.querySelectorAll('.card')));
   shuffled.forEach(function(element) {
     element.remove();
@@ -149,6 +152,8 @@ function restart() {
     cardDeck.appendChild(element)
   });
 }
+
+deckShuffle();
 document.querySelector('.fa-repeat').addEventListener('click', restart);
 cardDeck.addEventListener('click', respondtoClick);
 /*
