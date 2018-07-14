@@ -26,6 +26,13 @@ body {
   border-radius: 8px;
   text-align: center;
   padding: 5px;
+  position: absolute;
+  background-color: white;
+}
+
+button {
+  border: 1px solid black;
+  border-radius: 5px;
 }
 
 .hidden {

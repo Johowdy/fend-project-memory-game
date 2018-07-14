@@ -31,9 +31,9 @@ function respondtoClick(event) {
       !event.target.classList.contains('open') &&
       !event.target.classList.contains('show')) {
     showCard(event.target);
-    cardMatchCheck(event.target);
     moveCounter();
     starRating();
+    cardMatchCheck(event.target);
   }
 }
 //flips cards over
@@ -175,7 +175,10 @@ document.querySelector('.fa-repeat').addEventListener('click', restart);
 document.querySelector('.replayButton').addEventListener('click', function() {
   document.querySelector('.modal').classList.add('hidden');
   restart();
-}) ;
+});
+document.querySelector('.closeButton').addEventListener('click', function() {
+  document.querySelector('.modal').classList.add('hidden');
+});
 cardDeck.addEventListener('click', respondtoClick);
 /*
  * set up the event listener for a card. If a card is clicked:
