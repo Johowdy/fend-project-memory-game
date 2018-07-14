@@ -24,7 +24,7 @@ function shuffle(array) {
     }
     return array;
 }
-
+//shows the card, checks for match, increments move #, updates stars
 function respondtoClick(event) {
   if (event.target.classList.contains('card') &&
       !event.target.classList.contains('match') &&
@@ -51,7 +51,7 @@ function cardMatchCheck(target) {
   if (openCardsArray.length > 0) {
     //grabs the 'i' tag underneath the clicked card
     const icon = target.getElementsByTagName('i')[0];
-    //match variable = either has matching card or undefined
+    //match variable = contains either matching card or undefined
     const match = openCardsArray.find(function(element) {
       if (icon.className === element.getElementsByTagName('i')[0].className) {
         return true;
@@ -59,10 +59,12 @@ function cardMatchCheck(target) {
         return false;
       }
     });
+    //locks cards when matched
     if (match !== undefined) {
       lockCards(match, target);
       //empties array after match occurs
       openCardsArray.pop();
+      checkWinGame();
     } else {
       //hiding card that was just clicked, hiding card in the array after a
       //time delay
@@ -104,24 +106,39 @@ function timeKeeper() {
 
 //function to display the star rating to reflect player's performance. It should
 //decrement after a certain # of moves, then again after a certain # of moves
+//also decrements modal stars
 function starRating() {
   let lastStar;
+  let lastModalStar;
+  const deckStars = document.querySelectorAll('.stars .fa-star')
+  const modalStars = document.querySelectorAll('.winStars .fa-star')
   if (moves === 5) {
-    lastStar = document.querySelectorAll('.fa-star')[2];
+    lastStar = deckStars[2];
+    lastModalStar = modalStars[2];
   } else if (moves === 10) {
-    lastStar = document.querySelectorAll('.fa-star')[1];
+    lastStar = deckStars[1];
+    lastModalStar = modalStars[1];
   } else if (moves === 11) {
-    lastStar = document.querySelectorAll('.fa-star')[0];
+    lastStar = deckStars[0];
+    lastModalStar = modalStars[0];
   }
   if (lastStar !== undefined) {
     lastStar.classList.replace('fa-star', 'fa-star-o');
+    lastModalStar.classList.replace('fa-star', 'fa-star-o');
   }
 }
 
 //function to congratulate player on winning, ask if they want to play again,
 //and provide summary of time to win and star starRating
-function winGame() {
-
+function checkWinGame() {
+  //check if player has won
+  if (document.querySelectorAll('.match').length === 16) {
+    //create a modal with text
+    document.querySelector('.modal').classList.remove('hidden');
+    //display win time
+    //display move number
+    document.querySelector('.winMoves').textContent = moves;
+  }
 }
 
 //function to restart the game board, the timer, the star rating
@@ -142,7 +159,7 @@ function restart() {
   });
   deckShuffle();
 }
-//function to shuffle cards in deck
+//updates the gameboard with shuffled cards
 function deckShuffle() {
   const shuffled = shuffle(Array.from(document.querySelectorAll('.card')));
   shuffled.forEach(function(element) {
@@ -155,6 +172,10 @@ function deckShuffle() {
 
 deckShuffle();
 document.querySelector('.fa-repeat').addEventListener('click', restart);
+document.querySelector('.replayButton').addEventListener('click', function() {
+  document.querySelector('.modal').classList.add('hidden');
+  restart();
+}) ;
 cardDeck.addEventListener('click', respondtoClick);
 /*
  * set up the event listener for a card. If a card is clicked:

@@ -21,6 +21,17 @@ body {
     font-family: 'Coda', cursive;
 }
 
+.modal {
+  border: 2px solid black;
+  border-radius: 8px;
+  text-align: center;
+  padding: 5px;
+}
+
+.hidden {
+  display: none;
+}
+
 .container {
     display: flex;
     justify-content: center;
@@ -91,14 +102,14 @@ h1 {
     margin-bottom: 10px;
 }
 
-.score-panel .stars {
+.score-panel .stars, .winStars {
     margin: 0;
     padding: 0;
     display: inline-block;
     margin: 0 5px 0 0;
 }
 
-.score-panel .stars li {
+.score-panel .stars li, .winStars li {
     list-style: none;
     display: inline-block;
 }
