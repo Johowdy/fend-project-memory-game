@@ -96,7 +96,16 @@ function timeKeeper() {
   if (moves === 1) {
     intervalID = setInterval(function() {
       timePassed += 1;
-      document.querySelector('.timer').textContent = timePassed;
+      const minutes = parseInt(timePassed / 60, 10);
+      const seconds = parseInt(timePassed % 60, 10);
+      const hours = parseInt(minutes / 60, 10);
+      const timeDisplay = (hours > 0 ? hours + " hours " : "") +
+        (minutes > 0 ? minutes + " minute" +
+          (minutes >1 ? "s " : " ")
+          : "") 
+        + seconds + " seconds";
+      document.querySelector('.timer').textContent = timeDisplay;
+      document.querySelector('.winTime').textContent = timeDisplay;
     }, 1000)
   }
 }
@@ -138,6 +147,7 @@ function checkWinGame() {
     //create a modal with text
     document.querySelector('.modal').classList.remove('hidden');
     //display win time
+
     //display move number
     document.querySelector('.winMoves').textContent = moves;
     stopTimer();
