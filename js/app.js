@@ -1,14 +1,4 @@
-/*
- * Create a list that holds all of your cards
- */
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 const openCardsArray = [];
 const cardDeck = document.querySelector('.deck');
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -34,6 +24,7 @@ function respondtoClick(event) {
     moveCounter();
     starRating();
     cardMatchCheck(event.target);
+    timeKeeper();
   }
 }
 //flips cards over
@@ -98,10 +89,21 @@ function moveCounter () {
   document.querySelector('.moves').textContent = moves;
 }
 
-//function to display a timer when a player starts a game and stops once the
-//player wins the game
+//function to start a timer when player clicks on first card
+let timePassed = 0;
+let intervalID;
 function timeKeeper() {
+  if (moves === 1) {
+    intervalID = setInterval(function() {
+      timePassed += 1;
+      document.querySelector('.timer').textContent = timePassed;
+    }, 1000)
+  }
+}
 
+//to stop timer if player wins or clicks restart button
+function stopTimer() {
+  clearInterval(intervalID);
 }
 
 //function to display the star rating to reflect player's performance. It should
@@ -138,6 +140,7 @@ function checkWinGame() {
     //display win time
     //display move number
     document.querySelector('.winMoves').textContent = moves;
+    stopTimer();
   }
 }
 
@@ -158,6 +161,9 @@ function restart() {
     element.classList.remove('match', 'open', 'show');
   });
   deckShuffle();
+  stopTimer();
+  timePassed = 0;
+  document. querySelector('.timer').textContent = "";
 }
 //updates the gameboard with shuffled cards
 function deckShuffle() {
