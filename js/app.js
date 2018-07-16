@@ -99,11 +99,11 @@ function timeKeeper() {
       const minutes = parseInt(timePassed / 60, 10);
       const seconds = parseInt(timePassed % 60, 10);
       const hours = parseInt(minutes / 60, 10);
-      const timeDisplay = (hours > 0 ? hours + " hours " : "") +
-        (minutes > 0 ? minutes + " minute" +
-          (minutes >1 ? "s " : " ")
-          : "") 
-        + seconds + " seconds";
+      const timeDisplay = (hours > 0 ? hours + ' hours ' : '') +
+        (minutes > 0 ? minutes + ' minute' +
+          (minutes >1 ? 's ' : ' ')
+          : '')
+        + seconds + ' seconds';
       document.querySelector('.timer').textContent = timeDisplay;
       document.querySelector('.winTime').textContent = timeDisplay;
     }, 1000)
@@ -111,6 +111,7 @@ function timeKeeper() {
 }
 
 //to stop timer if player wins or clicks restart button
+//called in checkWinGame, restart
 function stopTimer() {
   clearInterval(intervalID);
 }
@@ -123,13 +124,13 @@ function starRating() {
   let lastModalStar;
   const deckStars = document.querySelectorAll('.stars .fa-star')
   const modalStars = document.querySelectorAll('.winStars .fa-star')
-  if (moves === 5) {
+  if (moves === 35) {
     lastStar = deckStars[2];
     lastModalStar = modalStars[2];
-  } else if (moves === 10) {
+  } else if (moves === 47) {
     lastStar = deckStars[1];
     lastModalStar = modalStars[1];
-  } else if (moves === 11) {
+  } else if (moves === 57) {
     lastStar = deckStars[0];
     lastModalStar = modalStars[0];
   }
@@ -144,10 +145,8 @@ function starRating() {
 function checkWinGame() {
   //check if player has won
   if (document.querySelectorAll('.match').length === 16) {
-    //create a modal with text
+    //show hidden congrats modal
     document.querySelector('.modal').classList.remove('hidden');
-    //display win time
-
     //display move number
     document.querySelector('.winMoves').textContent = moves;
     stopTimer();
@@ -173,9 +172,10 @@ function restart() {
   deckShuffle();
   stopTimer();
   timePassed = 0;
-  document. querySelector('.timer').textContent = "";
+  document. querySelector('.timer').textContent = '';
 }
 //updates the gameboard with shuffled cards
+//called in restart,
 function deckShuffle() {
   const shuffled = shuffle(Array.from(document.querySelectorAll('.card')));
   shuffled.forEach(function(element) {
@@ -196,13 +196,3 @@ document.querySelector('.closeButton').addEventListener('click', function() {
   document.querySelector('.modal').classList.add('hidden');
 });
 cardDeck.addEventListener('click', respondtoClick);
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)done!
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)done!
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)done!
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)done!
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
