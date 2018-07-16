@@ -1,6 +1,9 @@
-
 const openCardsArray = [];
 const cardDeck = document.querySelector('.deck');
+let timePassed = 0;
+let intervalID;
+let moves = 0;
+
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length, temporaryValue, randomIndex;
@@ -14,30 +17,32 @@ function shuffle(array) {
     }
     return array;
 }
-//shows the card, checks for match, increments move #, updates stars
-function respondtoClick(event) {
-  if (event.target.classList.contains('card') &&
-      !event.target.classList.contains('match') &&
-      !event.target.classList.contains('open') &&
-      !event.target.classList.contains('show')) {
-    showCard(event.target);
-    moveCounter();
-    starRating();
-    cardMatchCheck(event.target);
-    timeKeeper();
-  }
-}
-//flips cards over
+
+//function to flip cards over
 function showCard (target) {
   target.classList.add('open', 'show');
 }
-//adds a card to the openCardsArray, called in cardMatchCheck function
+
+//function to remove the open & show CSS classes to hide the card
+function hideCard(card) {
+  card.classList.remove('open','show');
+}
+
+//function to add a card to the openCardsArray
 function addtoOpenList (target) {
   openCardsArray.push(target);
 }
 
+//function to lock both cards if they match
+function lockCards(match, target) {
+  target.classList.add('match');
+  target.classList.remove('open','show');
+  match.classList.add('match');
+  match.classList.remove('open','show');
+}
+
 //function to search for matched card in the openCardsArray, either locks or
-//hides card pending match
+//hides card pending match. Also checks for game win, time delay for card flip
 function cardMatchCheck(target) {
   if (openCardsArray.length > 0) {
     //grabs the 'i' tag underneath the clicked card
@@ -69,29 +74,15 @@ function cardMatchCheck(target) {
     addtoOpenList(target);
   }
 }
-//removes the open & show CSS classes to hide the card, called in cardMatchCheck
-function hideCard(card) {
-  card.classList.remove('open','show');
-}
-//function to lock both cards if they match, called in cardMatchCheck
-function lockCards(match, target) {
-  target.classList.add('match');
-  target.classList.remove('open','show');
-  match.classList.add('match');
-  match.classList.remove('open','show');
-}
 
-//function to increment the move counter and dislay it on the page & put
-//functionality in another function called from this one
-let moves = 0;
+//function to increment the move counter and dislay it on the page
 function moveCounter () {
   moves += 1;
   document.querySelector('.moves').textContent = moves;
 }
 
-//function to start a timer when player clicks on first card
-let timePassed = 0;
-let intervalID;
+//function to start a timer when player clicks on first card and
+//displays timer on page & win modal
 function timeKeeper() {
   if (moves === 1) {
     intervalID = setInterval(function() {
@@ -110,8 +101,7 @@ function timeKeeper() {
   }
 }
 
-//to stop timer if player wins or clicks restart button
-//called in checkWinGame, restart
+//function to stop timer if player wins or clicks restart button
 function stopTimer() {
   clearInterval(intervalID);
 }
@@ -124,13 +114,13 @@ function starRating() {
   let lastModalStar;
   const deckStars = document.querySelectorAll('.stars .fa-star')
   const modalStars = document.querySelectorAll('.winStars .fa-star')
-  if (moves === 35) {
+  if (moves === 33) {
     lastStar = deckStars[2];
     lastModalStar = modalStars[2];
-  } else if (moves === 47) {
+  } else if (moves === 45) {
     lastStar = deckStars[1];
     lastModalStar = modalStars[1];
-  } else if (moves === 57) {
+  } else if (moves === 52) {
     lastStar = deckStars[0];
     lastModalStar = modalStars[0];
   }
@@ -140,8 +130,8 @@ function starRating() {
   }
 }
 
-//function to congratulate player on winning, ask if they want to play again,
-//and provide summary of time to win and star starRating
+//function to check if game won, show modal to congratulate player on winning,
+//ask if they want to play again. Modal shows game stats.
 function checkWinGame() {
   //check if player has won
   if (document.querySelectorAll('.match').length === 16) {
@@ -174,8 +164,23 @@ function restart() {
   timePassed = 0;
   document. querySelector('.timer').textContent = '';
 }
-//updates the gameboard with shuffled cards
-//called in restart,
+
+//function to show the card, check for match, increment moves, update stars, and
+//start timer
+function respondtoClick(event) {
+  if (event.target.classList.contains('card') &&
+      !event.target.classList.contains('match') &&
+      !event.target.classList.contains('open') &&
+      !event.target.classList.contains('show')) {
+    showCard(event.target);
+    moveCounter();
+    starRating();
+    cardMatchCheck(event.target);
+    timeKeeper();
+  }
+}
+
+//function to update the gameboard with shuffled cards
 function deckShuffle() {
   const shuffled = shuffle(Array.from(document.querySelectorAll('.card')));
   shuffled.forEach(function(element) {
