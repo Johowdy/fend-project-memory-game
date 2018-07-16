@@ -3,18 +3,14 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Resources](#resources)
 
-## Instructions
+## Instructions for Playing Game
 
-The starter project has some HTML and CSS styling to display a static version of the Memory Game project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
+To play this Memory Card Matching Game, begin by clicking on a card to flip the card over and  
+display its symbol.  Next, click on another card to view its symbol.  If the two
+cards match, they will remain face-up.  Otherwise, they will quickly flip face down.  As you flip the cards, try to remember the card placement and the symbol on each card.  The game is won when all the cards match. The game will track number of moves and the time it takes to win. If you want to restart the game at any time, simply click on the reload symbol. Have fun!
 
-To get started, open `js/app.js` and start building out the app's functionality
-
-For specific, detailed instructions, look at the project instructions in the [Udacity Classroom](https://classroom.udacity.com/me).
-
-## Contributing
-
-This repository is the starter code for _all_ Udacity students. Therefore, we most likely will not accept pull requests.
-
-For details, check out [CONTRIBUTING.md](CONTRIBUTING.md).
+## Resources
+Timer reference: https://stackoverflow.com/questions/20618355/the-simplest-possible-javascript-countdown-timer
+JavaScript reference: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
